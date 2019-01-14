@@ -1,0 +1,26 @@
+#proxy listen port
+listen: 52233
+#manage port
+mport: 22233
+#自动同步配置的token
+configtoken: p7OBHpSwZ0Iz
+#多个proxy的列表格式为proxy ip:proxy manage port
+proxylist: ["127.0.0.1:12233","127.0.0.1:22233"]
+#后端服务器配置
+backendcfg:
+  #健康检查超时s
+  checktimeout: 3
+  #健康检查失败次数
+  checkfail: 3
+  #健康检查频率
+  checkinter: 5
+  backends:
+  - addr: 172.27.0.11:9200
+    weight: 20
+    maxconn: 300
+  - addr: 172.27.0.11:7200
+    weight: 20
+    maxconn: 300
+  - addr: 172.27.0.12:9200
+    weight: 20
+    maxconn: 300
