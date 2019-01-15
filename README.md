@@ -1,5 +1,6 @@
 go-tcp-proxy
 =============
+golang tcp 代理，提供根据后端服务器状态关闭部分连接功能
 ## 安装方法
 ```bash
 cd $GOPATH/src
