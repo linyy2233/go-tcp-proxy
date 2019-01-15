@@ -9,11 +9,28 @@ import (
 
 var 	Cfg *PorxyConfig
 
-func connCopy(dst io.Writer, src io.Reader, stopChan chan bool ) {
+func connCopy2(dst io.Writer, src io.Reader, stopChan chan bool ) {
 	io.Copy(dst, src)
 	stopChan <- true
 }
 
+func connCopy(dst net.Conn, src net.Conn, stopChan chan bool ) {
+	var err error
+	var read int
+	bytes := make([]byte, 10240)
+	for   {
+		dst.SetReadDeadline(time.Now().Add(time.Duration(60) * time.Second))
+		read, err = dst.Read(bytes)
+		if err != nil {
+			break
+		}
+		_, err = src.Write(bytes[:read])
+		if err != nil {
+			break
+		}
+	}
+	stopChan <- true
+}
 
 func handleConn(client net.Conn, backend string,stopChan chan bool) {
 	defer func() {
