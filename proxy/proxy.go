@@ -51,13 +51,13 @@ func handleConn(client net.Conn, backend string,stopChan chan bool) {
 		server.Close()
 		client.Close()
 		<- connStopChan
-		log.Println("close connection "+backend,client.RemoteAddr())
+		log.Println("close connection",backend,client.RemoteAddr())
 	case <- stopChan:
 		server.Close()
 		client.Close()
 		<- connStopChan
 		<- connStopChan
-		log.Println("kill connection "+backend,client.RemoteAddr())
+		log.Println("kill connection",backend,client.RemoteAddr())
 	}
 
 }
